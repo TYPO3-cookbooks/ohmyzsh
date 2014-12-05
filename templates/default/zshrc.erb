@@ -1,0 +1,51 @@
+# Path to your oh-my-zsh configuration.
+export ZSH=/var/lib/ohmyzsh
+
+# Set to the name theme to load.
+# Look in ~/.oh-my-zsh/themes/
+export ZSH_THEME="robbyrussell"
+
+# Set to this to use case-sensitive completion
+# export CASE_SENSITIVE="true"
+
+# Comment this out to disable weekly auto-update checks
+# export DISABLE_AUTO_UPDATE="true"
+
+# Uncomment following line if you want to disable colors in ls
+# export DISABLE_LS_COLORS="true"
+
+# Uncomment following line if you want to disable autosetting terminal title.
+# export DISABLE_AUTO_TITLE="true"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git)
+
+setopt nosharehistory
+
+DISABLE_AUTO_UPDATE="true"
+source $ZSH/oh-my-zsh.sh
+
+# Customize to your needs...%
+
+function showHostName {
+	echo `hostname`
+}
+if [ -n "$SUDO_USER" ]; then
+	export PROMPT="%{$fg_bold[red]%}$(showHostName) $PROMPT"
+else
+	export PROMPT="%{$fg_bold[green]%}$(showHostName) $PROMPT"
+fi
+
+if [ -n "$SUDO_USER" ]; then
+	if [ -z "$OHMYZSH_INCLUDE" ]; then
+		export OHMYZSH_INCLUDE="yes"
+		test -f ~$SUDO_USER/.zshrc && . ~$SUDO_USER/.zshrc
+	fi
+fi
+
+if [ -z "$OHMYZSH_INCLUDE_USER" ]; then
+	export OHMYZSH_INCLUDE_USER="yes"
+	test -f ~$SUDO_USER/.zshrc_userconfig && . ~$SUDO_USER/.zshrc_userconfig
+	test -f ~/.zshrc_userconfig && . ~/.zshrc_userconfig
+fi
