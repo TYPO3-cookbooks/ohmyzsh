@@ -23,7 +23,15 @@ end
 if Chef::Config[:solo]
   users = [{'id' => "vagrant"}]
 else
-  users = search(:users, 'groups:sysadmin')
+  # if we are testing with test-kitchen, we are not always running chef-solo ;-)
+  begin
+    users = search(:users, 'groups:sysadmin')
+  rescue Net::HTTPServerException => http_error
+    if http_error.response.code == "404"
+      Chef::Log.warn "No users, no work"
+      users = []
+    end
+  end
 end
 
 users.reject{|u| ! File.directory?("/home/#{u['id']}")}.each do |u|
