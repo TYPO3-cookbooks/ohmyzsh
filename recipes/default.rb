@@ -12,7 +12,7 @@ end
 git "/var/lib/ohmyzsh" do
   repository "https://github.com/robbyrussell/oh-my-zsh.git"
   # update this from time to time, but avoid a sync during every chef-run
-  reference "a38af27991d15d14ac4ca55c919bb694d7eafb7a"
+  reference "8ac1859f377b5292597f11f5973bae1ebc8e2dce"
   action :sync
   # if github is down, don't fail the chef runs everywhere
   ignore_failure true
