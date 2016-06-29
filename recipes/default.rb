@@ -25,7 +25,7 @@ if Chef::Config[:solo]
 else
   # if we are testing with test-kitchen, we are not always running chef-solo ;-)
   begin
-    users = search(:users, 'groups:sysadmin')
+    users = search(:users, 'groups:sysadmin AND NOT action:remove')
   rescue Net::HTTPServerException => http_error
     if http_error.response.code == "404"
       Chef::Log.warn "No users, no work"
